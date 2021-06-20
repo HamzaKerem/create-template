@@ -18,8 +18,9 @@ editor="$EDITOR"
 [ -z "$EDITOR" ] && editor="vim"
 
 cleanup(){
-	[ -e "$stdin_tmp_file" ] && rm "$stdin_tmp_file"
-	[ -e "$config_tmp_file" ] && rm "$config_tmp_file"
+	[ -f "$stdin_tmp_file" ] && rm "$stdin_tmp_file"
+	[ -f "$config_tmp_file" ] && rm "$config_tmp_file"
+	[ -f "$filename_tmp_file" ] && rm "$filename_tmp_file"
 }
 
 err(){
@@ -99,6 +100,22 @@ get_line(){
 	done < "$local_file"
 }
 
+process_filename(){
+		
+	while read -r line; do
+		if [ -z "$file_name" ] && [ -z "$file_ext" ]; then
+			# if file exists, don't overwrite! Exit instead.
+			[ -f "$line" ] && err "File $line exists. Refusing to overwrite."
+
+			get_ext "$line"
+			stdin_tmp_file="$(mktemp)"
+		else
+			# Write passed template names to a temp. file
+			printf "%s\n" "$line" >> "$stdin_tmp_file"	
+		fi
+	done < "$filename_tmp_file"
+}
+
 parse_opts(){
 	# Parse and evaluate each option one by one 
 	quiet_bool=1
@@ -109,7 +126,8 @@ parse_opts(){
 	file_name=
 	file_ext=
 	stdin_tmp_file=
-
+	filename_tmp_file="$(mktemp)"
+	
 	while [ "$#" -gt 0 ]; do
 		case "$1" in
 			-n|--no-edit) no_edit_bool=0;;
@@ -121,21 +139,14 @@ parse_opts(){
 			-s|--no-messages) suppress_bool=0;;	
 			--) break;;
 			-*) err "Unknown option. Please see '--help'.";;
-			*) 
-					if [ -z "$file_name" ] && [ -z "$file_ext" ]; then
-						# if file exists, don't overwrite! Exit instead.
-						[ -f "$1" ] && err "File $1 exists. Refusing to overwrite."
-
-						get_ext "$1"
-						stdin_tmp_file="$(mktemp)"
-					else
-						# Write passed template names to a temp. file
-						printf "%s\n" "$1" >> "$stdin_tmp_file"	
-					fi;;
+			*)  printf "%s\n" "$1" >> "$filename_tmp_file";;
 		esac
 		shift
 	done
 	
+	# Process filnames	
+	process_filename
+
 	# Error checking. 
 	if [ "$generate_bool" -ne 0 ] && { [ -z "$file_name" ] || [ -z "$file_ext" ]; }; then
 		err "Failed to process file name and extension. Input file must have an extension."
