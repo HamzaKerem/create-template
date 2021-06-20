@@ -124,7 +124,7 @@ parse_opts(){
 				  *) 
 					if [ -z "$file_name" ] && [ -z "$file_ext" ]; then
 						# if file exists, don't overwrite! Exit instead.
-						[ -f "$1" ] && err "File $1 exists. Will not overwrite."
+						[ -f "$1" ] && err "File $1 exists. Refusing to overwrite."
 
 						get_ext "$1"
 						stdin_tmp_file="$(mktemp)"
@@ -146,6 +146,9 @@ read_config(){
 	[ -r "$config_file" ] || err "Failed to read $config_file. Please create the configuration file if you haven't done so."
 	found_lang_bool=1
 	line_num=0
+
+	# truncate info_file if '--generate' is passed
+	[ "$generate_bool" -eq 0 ] && > "$info_file"
 
 	while read -r line; do
 		line_num=$((line_num+1))
@@ -169,32 +172,37 @@ read_config(){
 				err "Empty values detected in $config_file on line $line_num."
 		fi
 
-		# Generate neccessary directories and file 
+		# Generate neccessary directories and write language name to info_file 
 		if [ "$generate_bool" -eq 0 ]; then
-			[ ! -f "$info_file" ] && > "$info_file"
-			[ ! -d "$config_dir/$read_lang_full" ] && mkdir "$config_dir/$read_lang_full" && 
-			printf "%s\n" "${read_lang_full} - " >> "$info_file"
+			[ ! -d "$config_dir/$read_lang_full" ] && mkdir "$config_dir/$read_lang_full"
+			printf "%s" "${read_lang_full}: " >> "$info_file"
 		fi
-		
+
+
 		# Get configuration file templates
 		config_tmp_file="$(mktemp)"
-		count=0
 		i=3
 		while true; do
 			template="$(printf "%s" "$line" | cut -d ':' -f $i)"
 			[ -z "$template" ] && break
 
 			# Generate neccessary directories 
-			[ "$generate_bool" -eq 0 ] && [ ! -f "$config_dir/$read_lang_full/$template" ] && > "$config_dir/$read_lang_full/$template"
+			if [ "$generate_bool" -eq 0 ]; then 
+				[ ! -f "$config_dir/$read_lang_full/$template" ] && > "$config_dir/$read_lang_full/$template"
+				printf "%s" "${template} " >> "$info_file"	
+			fi
+
 			printf "%s\n" "$template" >> "$config_tmp_file"	
-			#printf "%s\n" "${count}: ${template}  " >> "$info_file"	
 
 			i=$((i+1))
-			count=$((count+1))
 		done
 
 		found_lang_bool=0
-		[ "$generate_bool" -ne 0 ] && break
+		if [ "$generate_bool" -eq 0 ]; then
+			printf "\n" >> "$info_file"
+		else
+			break
+		fi
 
 	done < "$config_file"
 
@@ -233,7 +241,7 @@ apply_templates(){
 	fi
 
 	# Replace neccessary parts of the file
-	sed -i "s/\$file/$file_name/g" "$file" || warn "Failed to search and replace using sed."
+	sed -i "s/\$file/$file_name/g" "$file" 2> /dev/null || warn "Failed to search and replace using sed."
 
 	[ "$make_exe_bool" -eq 0 ] && chmod "$def_permissions" "$file"
 	[ "$no_edit_bool" -ne 0 ] && "$editor" "$file"
