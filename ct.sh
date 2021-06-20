@@ -112,16 +112,16 @@ parse_opts(){
 
 	while [ "$#" -gt 0 ]; do
 		case "$1" in
-				-n|--no-edit) no_edit_bool=0;;
-				-m|--make-executable) make_exe_bool=0;;
-				-g|--generate) generate_bool=0;;
-				-h|--help) show_help;;
-				-v|--version) show_version;;
-				-q|--quiet) quiet_bool=0;;	
-				-s|--no-messages) suppress_bool=0;;	
-				--) break;;
-				-*) err "Unknown option. Please see '--help'.";;
-				*) 
+			-n|--no-edit) no_edit_bool=0;;
+			-m|--make-executable) make_exe_bool=0;;
+			-g|--generate) generate_bool=0;;
+			-h|--help) show_help;;
+			-v|--version) show_version;;
+			-q|--quiet) quiet_bool=0;;	
+			-s|--no-messages) suppress_bool=0;;	
+			--) break;;
+			-*) err "Unknown option. Please see '--help'.";;
+			*) 
 					if [ -z "$file_name" ] && [ -z "$file_ext" ]; then
 						# if file exists, don't overwrite! Exit instead.
 						[ -f "$1" ] && err "File $1 exists. Refusing to overwrite."
