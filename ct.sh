@@ -43,6 +43,7 @@ show_help(){
 		printf "\n"
 		cat "$info_file" || err "Failed to display $info_file"
 	fi
+	cleanup
 	exit 0
 }
 
@@ -51,6 +52,7 @@ show_version(){
 	printf "%s\n" "$PROGRAM_NAME - $ALT_PROGRAM_NAME $VERSION"
 	printf "Licensed under %s\n" "$LICENSE"
 	printf "Written by %s\n" "$AUTHOR"
+	cleanup
 	exit 0
 }
 
