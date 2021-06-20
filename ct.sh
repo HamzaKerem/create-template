@@ -12,7 +12,7 @@ USAGE="Usage: $PROGRAM_NAME [-g|--generate] [-r|--reset] [-n|--no-edit] [-m|--ma
 # Configuration Data
 config_dir="$HOME/.config/$PROGRAM_NAME"
 config_file="$config_dir/.$PROGRAM_NAME.conf"
-info_file="$config_dir/.$PROGRAM.info"
+info_file="$config_dir/.$PROGRAM_NAME.info"
 def_permissions="755"
 editor="$EDITOR"
 [ -z "$EDITOR" ] && editor="vim"
