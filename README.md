@@ -64,7 +64,7 @@ directory, `~/.config/ct/.ct.conf` is the configuration file, and `~/.config/ct/
 changed easily by modifying the source under the `# Configuration Data` section in `ct.sh`. 
 
 Please follow the these steps to add your own templates to your local system:
-1 - Open up `~/.config/ct/.ct.conf` in your editor of choice and enter the following line:
+1. Open up `~/.config/ct/.ct.conf` in your editor of choice and enter the following line:
 ```
 LANGUAGE:EXTENSION:TEMPLATE1:TEMPLATE2:TEMPLATE3...
 ```
@@ -82,12 +82,52 @@ java:java:driver:class:interface
 # POSIX sh: production environment template
 sh:sh:default
 ```
-Comments (indicated by `#`) and empty lines are allowed.
+There is no limit on the number of templates that can be used. Comments (indicated by `#`) and empty lines are allowed.
+However, no field regardless of whether it is the field of `LANGUAGE`, `EXTENSION`, or `TEMPLATE...` can have any whitespace
+or a colon (`:`) in it. 
 
-2 - Run `./ct.sh -g` or `./ct.sh --generate` to generate the necessary directories for the languages and files for the templates.
+2. Run `./ct.sh -g` or `./ct.sh --generate` to generate the necessary directories for the languages and files for the templates.
 
-3 (Optional) - Run `tree -a ~/.config/ct` and `cat ~/.config/ct/.ct.info` to better understand what files are created and what templates
+3. (Optional) Run `tree -a ~/.config/ct` and `cat ~/.config/ct/.ct.info` to better understand what files are created and what templates
 are now available to the system. After step 2, `./ct.sh --help` will display the contents of `~/.config/ct/.ct.info` in order to remind the 
 user what languages and templates are ready to use.
 
-4 - 
+4. Finally modify your template file which can be found under `~/.config/ct/LANGUAGE/TEMPLATE` where `LANGUAGE` is the name of the language
+that the template belongs to and `TEMPLATE` is the name of the template. Any modifications made to file will apear when applying the template
+to a new file to work on. 
+
+`$file` is a special string that can be added to template files in order for the result file to search and replace `$file` with the class
+or file name. Please skim the contents of the files under `hamza_ct_config/java/` and then create templates of java files such as `./ct.sh 
+MyTesterClass.java driver` to better understand the role `$file` plays.
+
+## Options and Features
+
+- `-n` or `--no-edit` can be passed in order for `ct.sh` not to open the file for editing once the templates are loaded into the file.
+By default, `$EDITOR`, or `vim` if `$EDITOR` is empty, is used as the text editor to edit the created file. This can be found and 
+configured under the section `# Configuration Data`.
+- `-m` or `--make-executable` can be passed in order for `ct.sh` to make the file executable once the templates are loaded into the file.
+The file permissions `chmod` uses to make the file executable can be found and configured under the section `# Configuration Data`.
+- `-q` or `--quiet` can be passed in order for `ct.sh` not to display any warning messages. This flag does not affect error messages.
+- `-s` or `--no-messages` can be passed in order for `ct.sh` not to display any error messages. This flag does not affect warning messages.
+- `-h` or `--help` displays the help menu.
+- `-v` or `--version` displays version information.
+
+The order of the passed options makes no difference. `ct.sh` currently does not support stacking up short options. Please use
+`./ct.sh file.extension -s -q -n -m` instead of `./ct.sh file.extension -sqnm`.
+
+### LICENSE and AUTHOR
+
+- `create-template` is free/libre software. This program is released under the GPLv3 license, which you can find in the file [LICENSE.txt](
+LICENCE.txt).
+
+- `create-template` and its documentation is written entirely by Hamza Kerem Mumcu. Version 1.1 was released June 21 2021. You can reach me 
+at hamzamumcu@protonmail.com.
+
+### TODO
+
+All contributions are welcome.
+
+1. Add an append mode. Templates should be able to get applied to already existing files, perhaps with a `--append` flag.
+2. Add multiple file extension support. For instance, C header files should be recognized as a C file. This what it could look like in the 
+configuration file: `c:c,h:TEMPLATE...` where `c` and `h` are file extensions.
+file could l 

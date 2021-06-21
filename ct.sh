@@ -4,7 +4,7 @@
 PROGRAM_NAME="ct"
 ALT_PROGRAM_NAME="create-template"
 LICENSE="GNU GPLv3"
-VERSION="1.0"
+VERSION="1.1"
 AUTHOR="Hamza Kerem Mumcu <hamzamumcu@protonmail.com>"
 USAGE="Usage: $PROGRAM_NAME [-g|--generate] [-n|--no-edit] [-m|--make-executable]
 [-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE"
