@@ -96,9 +96,9 @@ user what languages and templates are ready to use.
 that the template belongs to and `TEMPLATE` is the name of the template. Any modifications made to file will apear when applying the template
 to a new file to work on. 
 
-`$file` is a special string that can be added to template files in order for the result file to search and replace `$file` with the class
-or file name. Please skim the contents of the files under `hamza_ct_config/java/` and then create templates of java files such as `./ct.sh 
-MyTesterClass.java driver` to better understand the role `$file` plays.
+`$file` is a special string that can be added to template files in order for the `$file` string in the result file to be searched and replaced 
+with the class or file name. Please skim the contents of the files under `hamza_ct_config/java/` and then create templates of java files 
+such as `./ct.sh MyTesterClass.java driver` to better understand the role `$file` plays.
 
 ## Options and Features
 
@@ -117,7 +117,7 @@ The order of the passed options makes no difference. `ct.sh` currently does not 
 
 ### LICENSE and AUTHOR
 
-- `create-template` is free/libre software. This program is released under the GPLv3 license, which you can find in the file [LICENSE.txt](
+- `create-template` is free/libre software. This program is released under the GPLv3 license, which you can find in the file `LICENSE.txt`. 
 LICENCE.txt).
 
 - `create-template` and its documentation is written entirely by Hamza Kerem Mumcu. Version 1.1 was released June 21 2021. You can reach me 
