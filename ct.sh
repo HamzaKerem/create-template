@@ -238,10 +238,10 @@ apply_templates(){
 			if [ -n "$template" ]; then
 				cat "$config_dir/$read_lang_full/$template" >> "$file" 
 			else
-				warn "Template $line is not a valid template number. Skipping."
+				warn "Template $line is not a valid template index. Skipping."
 			fi
 		else
-			warn "Template $line is not a valid template. Skipping."
+			warn "Template $line is not a valid template name. Skipping."
 		fi
 	done < "$stdin_tmp_file"
 
