@@ -14,7 +14,7 @@ they wish.
 
 ```
 ./ct.sh [-g|--generate] [-n|--no-edit] [-m|--make-executable]
-[-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE 
+[-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE [TEMPLATE]
 ```
 
 In order to get started right away, copy my personal configuration files to your local configuration 
@@ -130,4 +130,3 @@ All contributions are welcome.
 1. Add an append mode. Templates should be able to get applied to already existing files, perhaps with a `--append` flag.
 2. Add multiple file extension support. For instance, C header files should be recognized as a C file. This what it could look like in the 
 configuration file: `c:c,h:TEMPLATE...` where `c` and `h` are file extensions.
-file could l 
