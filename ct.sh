@@ -7,7 +7,7 @@ LICENSE="GNU GPLv3"
 VERSION="1.0"
 AUTHOR="Hamza Kerem Mumcu <hamzamumcu@protonmail.com>"
 USAGE="Usage: $PROGRAM_NAME [-g|--generate] [-n|--no-edit] [-m|--make-executable]
-[-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE [TEMPLATE]"
+[-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE"
 
 # Configuration Data
 config_dir="$HOME/.config/$PROGRAM_NAME"

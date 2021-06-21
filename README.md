@@ -9,3 +9,10 @@ scenario `default` could contain `#include` guards for standard libraries while	
 could contain `#include` guards for external libraries, and `extension` could contain code to initialize
 these libraries. This is only an example, users can incorporate templates into their projects however 
 they wish.
+
+## Usage
+
+```
+./ct.sh [-g|--generate] [-n|--no-edit] [-m|--make-executable]
+[-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE 
+```
