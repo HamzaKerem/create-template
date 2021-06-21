@@ -14,8 +14,8 @@ config_dir="$HOME/.config/$PROGRAM_NAME"
 config_file="$config_dir/.$PROGRAM_NAME.conf"
 info_file="$config_dir/.$PROGRAM_NAME.info"
 def_permissions="755"
-editor="$EDITOR"
-[ -z "$EDITOR" ] && editor="vim"
+# Assign editor to be $EDITOR or to vim if $EDITOR is empty 
+editor="${EDITOR:-vim}" 
 
 cleanup(){
 	[ -f "$stdin_tmp_file" ] && rm "$stdin_tmp_file"
@@ -161,13 +161,13 @@ read_config(){
 	line_num=0
 
 	# truncate info_file if '--generate' is passed
-	[ "$generate_bool" -eq 0 ] && > "$info_file"
+	[ "$generate_bool" -eq 0 ] && printf "" > "$info_file"
 
 	while read -r line; do
 		line_num=$((line_num+1))
 
 		# remove all whitespace
-		line="$(printf "%s" "$line" | tr -d [:space:])"
+		line="$(printf "%s" "$line" | tr -d '[:space:]')"
 		# check if line is a comment, if so continue on with next iteration
 		[ "$(printf "%s" "$line" | cut -b 1)" = "#" ] && continue
 		# check if line is empty, if so continue on with next iteration
@@ -201,7 +201,7 @@ read_config(){
 
 			# Generate neccessary directories 
 			if [ "$generate_bool" -eq 0 ]; then 
-				[ ! -f "$config_dir/$read_lang_full/$template" ] && > "$config_dir/$read_lang_full/$template"
+				[ ! -f "$config_dir/$read_lang_full/$template" ] && printf "" > "$config_dir/$read_lang_full/$template"
 				printf "%s" "${template} " >> "$info_file"	
 			fi
 
@@ -233,7 +233,7 @@ apply_templates(){
 	while read -r line; do
 		if grep -qx "$line" "$config_tmp_file"; then
 			cat "$config_dir/$read_lang_full/$line" >> "$file" 
-		elif printf "%s" "$line" | grep -wq [0-9]; then
+		elif printf "%s" "$line" | grep -Ewq '^([0-9]+)$'; then
 			template="$(get_line "$config_tmp_file" $((line+1)))"
 			if [ -n "$template" ]; then
 				cat "$config_dir/$read_lang_full/$template" >> "$file" 
