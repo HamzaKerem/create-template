@@ -118,7 +118,6 @@ The order of the passed options makes no difference. `ct.sh` currently does not 
 ### LICENSE and AUTHOR
 
 - `create-template` is free/libre software. This program is released under the GPLv3 license, which you can find in the file `LICENSE.txt`. 
-LICENCE.txt).
 
 - `create-template` and its documentation is written entirely by Hamza Kerem Mumcu. Version 1.1 was released June 21 2021. You can reach me 
 at hamzamumcu@protonmail.com.
