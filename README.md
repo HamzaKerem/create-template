@@ -16,3 +16,6 @@ they wish.
 ./ct.sh [-g|--generate] [-n|--no-edit] [-m|--make-executable]
 [-q|--quiet] [-s|--no-messages] [-h|--help] [-v|--version] FILE 
 ```
+
+In order to get started right away, copy my personal configuration files to your local configuration 
+directory: `cp hamza_ct_config ~/.config/ct`. 
