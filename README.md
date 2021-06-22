@@ -1,6 +1,6 @@
-# POSIX Compliant Text Template Creator
+# Text Template Creator Written In POSIX Shell
 
-`create-template`, or `ct` for short, is a POSIX compliant text template creator.
+`create-template`, or `ct` for short, is text template creator written in POSIX shell.
 It allows users to quickly create files that are based on specific templates.
 
 For instance, `./ct.sh main.c default lib1 lib2 extension` will create a `main.c` file which
