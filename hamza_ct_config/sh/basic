@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Program Data
+
+parse_opts(){
+	# Parse and evaluate each option one by one 
+
+	while [ "$#" -gt 0 ]; do
+		case "$1" in
+			 *) :;;
+		esac
+		shift
+	done
+}
+
+parse_opts "$@"
