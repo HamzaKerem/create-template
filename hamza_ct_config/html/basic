@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title> $file </title>
+		<link rel='stylesheet' type='text/css' href="$file.css">
+		<meta charset="utf-8">
+	</head>
+
+	<body>
+		<h1> $file </h1>
+	</body>
+
+</html>
